@@ -1,0 +1,76 @@
+/*
+Ces styles sont communs Ã  tous nos projet de type "labo", il pourra Ãªtre
+"surchargÃ©" par les styles provenant de css/style.css
+*/
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: arial,sans-serif;
+    background-color: #eee;
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+body > header {
+    background: #00a1b4;
+    padding: 2rem 1rem;
+    color: white;
+}
+
+#goback, #edit {
+    float: right;
+    font-size: 0.85em;
+    color: white;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+body > header h1 {
+    margin: 0;
+    font-weight: normal;
+}
+
+
+.test-section {
+    background-color: white;
+    border-bottom: 3px #66cccc solid;
+    margin: 2rem 1rem;
+    padding: 2rem 1rem;
+}
+
+.test-section h2 {
+    font-size: 2.5rem;
+    line-height: 1;
+    margin-bottom: 2rem;
+    margin-top: 0;
+    padding-bottom: 1rem;
+    border-bottom: 1rem dotted #66cccc;
+    color: #00a1b4;
+}
+
+.test-section figure.test-code {
+    background-color: #eee;
+    padding: 1rem;
+    margin: 2rem 0;;
+}
+
+.test-section .test-block {
+    padding: 2rem 2rem;
+    border: 1px #66cccc solid;
+}
+
+iframe {
+    border: 1px #00a1b4 solid;
+    width: 100%;
+    height: 400px;
+}
+
+@media print
+{
+    test-section {
+        page-break-inside : avoid;
+    }
+}

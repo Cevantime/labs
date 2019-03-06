@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Les bases</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/monokai.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="{{ asset('css/normalize.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/labo.css') }}"/>
+    <style></style>
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+<header>
+    <a id="goback" href="{{ path('lab_index') }}">Retours aux labos</a>
+    <a id="edit" href="{{ path('lab_edit', {id: lab.id}) }}">Editer</a>
+    <h1>
+        Javascript les bases
+    </h1>
+</header>
+<main>
+    <section class="test-section">
+        <header>
+            <h2>{{ lab.name }}</h2>
+        </header>
+        {% for lang in ['php', 'html', 'css', 'js'] %}
+            {% if attribute(lab, lang) %}
+                <figure class="test-code">
+                    <figcaption>
+                        Code lang
+                    </figcaption>
+                    <pre><code class="html">{{ attribute(lab, lang) }}</code></pre>
+                </figure>
+            {% endif %}
+        {% endfor %}
+
+        <p>
+            Résultat :
+        </p>
+        <iframe src="{{ path('lab_preview', {id : lab.id}) }}" frameborder="0"></iframe>
+
+    </section>
+</main>
+</body>
+</html>

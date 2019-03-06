@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Lab{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/lab-preview.css') }}">
+{% endblock %}
+
+{% block body %}
+    <h1>Edit Lab</h1>
+
+    {{ include('lab/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('lab_index') }}">back to list</a>
+
+    {{ include('lab/_delete_form.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('js/lab-live-preview.js') }}"></script>
+{% endblock %}

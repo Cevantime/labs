@@ -1,0 +1,9 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+<button class="btn">{{ button_label|default('Save') }}</button>
+<aside>
+    Preview :
+
+    <iframe id="lab-preview" src="{{ path('lab_preview', {id : form.vars.value.id ? form.vars.value.id : 0}) }}"></iframe>
+</aside>
+{{ form_end(form) }}

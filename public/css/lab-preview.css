@@ -3,3 +3,9 @@ iframe {
     height: 400px;
     display: block;
 }
+
+.ace-editor {
+    height: 150px;
+    overflow: auto;
+    font-size: 1.2em;
+}

@@ -5,6 +5,12 @@ $(function () {
             clearTimeout(timeout);
         }
         timeout = setTimeout(function(){
+            for(var lang in editors) {
+                if(editors.hasOwnProperty(lang)) {
+                    var editor = editors[lang];
+                    $('#lab_'+lang).val(editor.getSession().getValue());
+                }
+            }
             var data = $('form[name="lab"]').serialize();
             $.post(BASE_URL + 'lab/live-preview', data)
                 .done(function (html) {
@@ -14,7 +20,13 @@ $(function () {
 
     }
 
-    console.log('test');
+    var editors = {};
 
-    $('#lab_js,#lab_html,#lab_css,#lab_php').change(refreshPreview).on('input', refreshPreview);
+    ['html', 'js', 'css', 'php'].forEach(function(el){
+       editors[el] = ace.edit('editor-' + el);
+
+       editors[el].getSession().setValue($('#lab_'+el).hide().val());
+       editors[el].getSession().on('change', refreshPreview);
+    });
+
 });

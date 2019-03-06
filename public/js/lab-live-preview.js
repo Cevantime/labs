@@ -1,32 +1,48 @@
 $(function () {
-    var timeout;
-    function refreshPreview() {
-        if(typeof timeout !== 'undefined') {
-            clearTimeout(timeout);
-        }
-        timeout = setTimeout(function(){
-            for(var lang in editors) {
-                if(editors.hasOwnProperty(lang)) {
-                    var editor = editors[lang];
-                    $('#lab_'+lang).val(editor.getSession().getValue());
-                }
+        var timeout;
+
+        function refreshPreview(lang) {
+            console.log(lang);
+            if (typeof timeout !== 'undefined') {
+                clearTimeout(timeout);
             }
-            var data = $('form[name="lab"]').serialize();
-            $.post(BASE_URL + 'lab/live-preview', data)
-                .done(function (html) {
-                    document.getElementById('lab-preview').src = "data:text/html;charset=utf-8," + escape(html);
-                });
-        }, 500);
+            timeout = setTimeout(function () {
 
+                var editor = editors[lang];
+                $('#lab_' + lang).val(editor.getSession().getValue());
+
+                var data = $('form[name="lab"]').serialize();
+                $.post(BASE_URL + 'lab/live-preview', data)
+                    .done(function (html) {
+                        $('#lab-preview')[0].srcdoc = html;
+                    });
+            }, 500);
+
+        }
+
+        var editors = {};
+        var supportAssoc = {
+            'html': 'ace/mode/html',
+            'js': 'ace/mode/javascript',
+            'css': 'ace/mode/css',
+            'php': 'ace/mode/php'
+        };
+
+        $("#lab-preview").sticky({topSpacing: 60});
+
+        for (var lang in supportAssoc) {
+            editors[lang] = ace.edit('editor-' + lang, {
+                theme : "ace/theme/tomorrow_night_eighties",
+                mode: supportAssoc[lang],
+                maxLines: 30,
+                minLines: 7,
+                wrap: true,
+                autoScrollEditorIntoView: true
+            });
+            editors[lang].getSession().setValue($('#lab_' + lang).hide().val());
+            const l = lang;
+            editors[lang].getSession().on('change', function() {refreshPreview(l)});
+
+        }
     }
-
-    var editors = {};
-
-    ['html', 'js', 'css', 'php'].forEach(function(el){
-       editors[el] = ace.edit('editor-' + el);
-
-       editors[el].getSession().setValue($('#lab_'+el).hide().val());
-       editors[el].getSession().on('change', refreshPreview);
-    });
-
-});
+);

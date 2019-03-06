@@ -22,9 +22,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('lab_index') }}">Tous les labos</a>
                 </li>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('lab_new') }}">Ajouter un labo</a>
                 </li>
+                {% endif %}
             </ul>
             <ul class="nav navbar-nav ml-auto">
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -48,9 +50,13 @@
     {% block body %}{% endblock %}
 </main>
 <script
-        src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
         crossorigin="anonymous"></script>
+{#<script#}
+        {#src="https://code.jquery.com/jquery-3.3.1.min.js"#}
+        {#integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="#}
+        {#crossorigin="anonymous"></script>#}
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
         integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o"
         crossorigin="anonymous"></script>

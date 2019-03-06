@@ -8,7 +8,7 @@ $(function () {
             var data = $('form[name="lab"]').serialize();
             $.post(BASE_URL + 'lab/live-preview', data)
                 .done(function (html) {
-                    $('#lab-preview').contents().find('html').html(html)
+                    document.getElementById('lab-preview').src = "data:text/html;charset=utf-8," + escape(html);
                 });
         }, 500);
 

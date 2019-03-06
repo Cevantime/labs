@@ -34,36 +34,37 @@
     </table>
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <a class="btn btn-success" href="{{ path('lab_new') }}">Ajouter un nouveau</a>
-    {% endif %}
-    {% if app.user.username != 'Cevantime' %}
-        <h1>Liste des labos du formateur</h1>
 
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for lab in labsTeacher %}
+        {% if app.user.username != 'Cevantime' %}
+            <h1>Liste des labos du formateur</h1>
+
+            <table class="table">
+                <thead>
                 <tr>
-                    <td>{{ lab.id }}</td>
-                    <td>{{ lab.name }}</td>
-                    <td>{{ lab.description }}</td>
-                    <td>
-                        <a href="{{ path('lab_show', {'id': lab.id}) }}">show</a>
-                        <a href="{{ path('lab_edit', {'id': lab.id}) }}">edit</a>
-                    </td>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>actions</th>
                 </tr>
-            {% else %}
-                <tr>
-                    <td colspan="8">no records found</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for lab in labsTeacher %}
+                    <tr>
+                        <td>{{ lab.id }}</td>
+                        <td>{{ lab.name }}</td>
+                        <td>{{ lab.description }}</td>
+                        <td>
+                            <a href="{{ path('lab_show', {'id': lab.id}) }}">show</a>
+                            <a href="{{ path('lab_edit', {'id': lab.id}) }}">edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="8">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
     {% endif %}
 {% endblock %}

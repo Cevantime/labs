@@ -31,6 +31,7 @@ class LabController extends AbstractController
     }
 
     /**
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/new", name="lab_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
@@ -89,7 +90,7 @@ class LabController extends AbstractController
     public function edit(Request $request, Lab $lab): Response
     {
         if($this->getUser() !== $lab->getAuthor()) {
-            $this->redirectToRoute('index');
+            return $this->redirectToRoute('index');
         }
         $form = $this->createForm(LabType::class, $lab);
         $form->handleRequest($request);
@@ -129,7 +130,7 @@ class LabController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$lab->getId(), $request->request->get('_token'))) {
             if($this->getUser() !== $lab->getAuthor()) {
-                $this->redirectToRoute('index');
+                return $this->redirectToRoute('index');
             }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($lab);

@@ -28,9 +28,9 @@
             {% if attribute(lab, lang) %}
                 <figure class="test-code">
                     <figcaption>
-                        Code lang
+                        Code {{ lang }}
                     </figcaption>
-                    <pre><code class="html">{{ attribute(lab, lang) }}</code></pre>
+                    <pre><code class="{{ lang }}">{{ attribute(lab, lang) }}</code></pre>
                 </figure>
             {% endif %}
         {% endfor %}

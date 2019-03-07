@@ -20,6 +20,15 @@ security:
                 authenticators:
                     - App\Security\LabAuthenticator
 
+            logout:
+                path:   /logout
+                target: /
+
+            remember_me:
+                secret:   '%kernel.secret%'
+                # pour une durée de 1 semaine
+                lifetime: 604800
+                path:     /
             # activate different ways to authenticate
 
             # http_basic: true

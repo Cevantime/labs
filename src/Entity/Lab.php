@@ -52,6 +52,40 @@ class Lab
      */
     private $author;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $hasJquery;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $hasFontawesome;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $hasBootstrap;
+
+    /**
+     * @param User|null $user
+     * @return Lab
+     */
+    public function copy(User $user = null)
+    {
+        $copy = clone $this;
+        $copy->name .= ' (copy)';
+        if($user) {
+            $copy->author = $user;
+        }
+        return $copy;
+    }
+
+    public function __clone()
+    {
+        $this->id = null;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -137,6 +171,42 @@ class Lab
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getHasJquery(): ?bool
+    {
+        return $this->hasJquery;
+    }
+
+    public function setHasJquery(bool $hasJquery): self
+    {
+        $this->hasJquery = $hasJquery;
+
+        return $this;
+    }
+
+    public function getHasFontawesome(): ?bool
+    {
+        return $this->hasFontawesome;
+    }
+
+    public function setHasFontawesome(bool $hasFontawesome): self
+    {
+        $this->hasFontawesome = $hasFontawesome;
+
+        return $this;
+    }
+
+    public function getHasBootstrap(): ?bool
+    {
+        return $this->hasBootstrap;
+    }
+
+    public function setHasBootstrap(bool $hasBootstrap): self
+    {
+        $this->hasBootstrap = $hasBootstrap;
 
         return $this;
     }

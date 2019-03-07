@@ -6,6 +6,8 @@ use App\Entity\Lab;
 use App\Form\LabType;
 use App\Repository\LabRepository;
 use App\Repository\UserRepository;
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -108,6 +110,18 @@ class LabController extends AbstractController
             'lab' => $lab,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     * @Route("/{id}/duplicate", name="lab_duplicate", methods={"GET"})
+     */
+    public function duplicate(Lab $lab, EntityManagerInterface $manager): Response
+    {
+        $copy = $lab->copy($this->getUser());
+        $manager->persist($copy);
+        $manager->flush();
+        return $this->redirectToRoute('lab_index');
     }
 
     /**

@@ -24,7 +24,7 @@
         <header>
             <h2>{{ lab.name }}</h2>
         </header>
-        {% for lang in ['php', 'html', 'css', 'js'] %}
+        {% for lang in ['html', 'css', 'js'] %}
             {% if attribute(lab, lang) %}
                 <figure class="test-code">
                     <figcaption>

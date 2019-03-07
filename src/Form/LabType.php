@@ -17,7 +17,10 @@ class LabType extends AbstractType
             ->add('html')
             ->add('css')
             ->add('js')
-            ->add('php')
+//            ->add('php')
+            ->add('hasJquery')
+            ->add('hasFontawesome')
+            ->add('hasBootstrap')
         ;
     }
 

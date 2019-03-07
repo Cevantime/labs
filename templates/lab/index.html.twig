@@ -20,9 +20,10 @@
                 <td>{{ lab.id }}</td>
                 <td>{{ lab.name }}</td>
                 <td>{{ lab.description }}</td>
-                <td>
-                    <a href="{{ path('lab_show', {'id': lab.id}) }}">show</a>
-                    <a href="{{ path('lab_edit', {'id': lab.id}) }}">edit</a>
+                <td class="btn-group">
+                    <a class="btn btn-sm btn-primary" href="{{ path('lab_show', {'id': lab.id}) }}">show</a>
+                    <a class="btn btn-sm btn-success" href="{{ path('lab_edit', {'id': lab.id}) }}">edit</a>
+                    <a class="btn btn-sm btn-default" href="{{ path('lab_duplicate', {'id': lab.id}) }}">duplicate</a>
                 </td>
             </tr>
         {% else %}
@@ -53,9 +54,9 @@
                         <td>{{ lab.id }}</td>
                         <td>{{ lab.name }}</td>
                         <td>{{ lab.description }}</td>
-                        <td>
-                            <a href="{{ path('lab_show', {'id': lab.id}) }}">show</a>
-                            <a href="{{ path('lab_edit', {'id': lab.id}) }}">edit</a>
+                        <td class="btn-group">
+                            <a class="btn btn-sm btn-primary" href="{{ path('lab_show', {'id': lab.id}) }}">show</a>
+                            <a class="btn btn-sm btn-default" href="{{ path('lab_duplicate', {'id': lab.id}) }}">duplicate</a>
                         </td>
                     </tr>
                 {% else %}

@@ -2,18 +2,30 @@
     {{ form_row(form.name) }}
     {{ form_row(form.description) }}
     <div class="row">
-        <div class="col-md-7">
-            {% for f in ['html', 'css', 'js', 'php'] %}
-                {{ form_row(form[f]) }}
-                <div class="ace-editor" id="editor-{{ f }}"></div>
-            {% endfor %}
+        <div class="col">
+        {{ form_row(form.hasJquery) }}
         </div>
-        <aside class="col-md-5">
-            Preview :
-
-            <iframe id="lab-preview" src="{{ path('lab_preview', {id : form.vars.value.id ? form.vars.value.id : 0}) }}"></iframe>
-        </aside>
+        <div class="col">
+        {{ form_row(form.hasFontawesome) }}
+        </div>
+        <div class="col">
+        {{ form_row(form.hasBootstrap) }}
+        </div>
     </div>
+<div class="row">
+    <div class="col-md-7">
+        {% for f in ['html', 'css', 'js'] %}
+            {{ form_row(form[f]) }}
+            <div class="ace-editor" id="editor-{{ f }}"></div>
+        {% endfor %}
+    </div>
+    <aside class="col-md-5">
+        Preview :
+
+        <iframe id="lab-preview"
+                src="{{ path('lab_preview', {id : form.vars.value.id ? form.vars.value.id : 0}) }}"></iframe>
+    </aside>
+</div>
 <button class="btn">{{ button_label|default('Save') }}</button>
 
 {{ form_end(form) }}

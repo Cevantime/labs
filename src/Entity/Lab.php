@@ -68,6 +68,11 @@ class Lab
     private $hasBootstrap;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $archived = false;
+
+    /**
      * @param User|null $user
      * @return Lab
      */
@@ -208,6 +213,24 @@ class Lab
     {
         $this->hasBootstrap = $hasBootstrap;
 
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getArchived():?bool
+    {
+        return $this->archived;
+    }
+
+    /**
+     * @param mixed $archived
+     * @return Lab
+     */
+    public function setArchived($archived): self
+    {
+        $this->archived = $archived;
         return $this;
     }
 }

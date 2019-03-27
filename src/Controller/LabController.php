@@ -25,10 +25,23 @@ class LabController extends AbstractController
      */
     public function index(LabRepository $labRepository, UserRepository $userRepository): Response
     {
+        $labs = $labRepository->findBy(['author' => $this->getUser()]);
+        $labsArchived = array_filter($labs, function($lab){
+            return $lab->getArchived();
+        });
+        $labs = array_udiff($labs, $labsArchived, function($lab1,$lab2){
+            return $lab1->getId() <=> $lab2->getId();
+        });
 
         return $this->render('lab/index.html.twig', [
-            'labsTeacher' => $labRepository->findBy(['author'=>$userRepository->findOneBy(['username'=>'Cevantime'])]),
-            'labs' => $this->isGranted('IS_AUTHENTICATED_FULLY') ? $labRepository->findBy(['author' => $this->getUser()]) : []
+            'labsTeacher' => $labRepository->findBy([
+                'archived' => false,
+                'author' => $userRepository->findOneBy([
+                    'username' => 'Cevantime',
+                ])
+            ]),
+            'labs' => $this->isGranted('IS_AUTHENTICATED_FULLY') ? $labs : [],
+            'labsArchived' => $labsArchived
         ]);
     }
 
@@ -63,7 +76,7 @@ class LabController extends AbstractController
     public function preview(LabRepository $labRepository, $id = null): Response
     {
         $lab = $labRepository->find($id);
-        if(!$lab) {
+        if (!$lab) {
             $lab = new Lab();
         }
         return $this->render('lab/preview.html.twig', [
@@ -77,7 +90,7 @@ class LabController extends AbstractController
     public function show(LabRepository $labRepository, $id = null): Response
     {
         $lab = $labRepository->find($id);
-        if(!$lab) {
+        if (!$lab) {
             $lab = new Lab();
         }
         return $this->render('lab/show.html.twig', [
@@ -91,7 +104,7 @@ class LabController extends AbstractController
      */
     public function edit(Request $request, Lab $lab): Response
     {
-        if($this->getUser() !== $lab->getAuthor()) {
+        if ($this->getUser() !== $lab->getAuthor()) {
             return $this->redirectToRoute('index');
         }
         $form = $this->createForm(LabType::class, $lab);
@@ -136,14 +149,15 @@ class LabController extends AbstractController
             'lab' => $lab
         ]);
     }
+
     /**
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/{id}", name="lab_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Lab $lab): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$lab->getId(), $request->request->get('_token'))) {
-            if($this->getUser() !== $lab->getAuthor()) {
+        if ($this->isCsrfTokenValid('delete' . $lab->getId(), $request->request->get('_token'))) {
+            if ($this->getUser() !== $lab->getAuthor()) {
                 return $this->redirectToRoute('index');
             }
             $entityManager = $this->getDoctrine()->getManager();
@@ -151,6 +165,20 @@ class LabController extends AbstractController
             $entityManager->flush();
         }
 
+        return $this->redirectToRoute('lab_index');
+    }
+
+    /**
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     * @Route("/archive/{id}", name="lab_archive", methods={"GET"})
+     */
+    public function archive(Request $request, Lab $lab, EntityManagerInterface $em): Response
+    {
+        if ($this->getUser() !== $lab->getAuthor()) {
+            return $this->redirectToRoute('index');
+        }
+        $lab->setArchived(!$lab->getArchived());
+        $em->flush();
         return $this->redirectToRoute('lab_index');
     }
 }

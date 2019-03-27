@@ -24,6 +24,7 @@
                     <a class="btn btn-sm btn-primary" href="{{ path('lab_show', {'id': lab.id}) }}">show</a>
                     <a class="btn btn-sm btn-success" href="{{ path('lab_edit', {'id': lab.id}) }}">edit</a>
                     <a class="btn btn-sm btn-default" href="{{ path('lab_duplicate', {'id': lab.id}) }}">duplicate</a>
+                    <a class="btn btn-sm btn-info" href="{{ path('lab_archive', {'id': lab.id}) }}">archive</a>
                 </td>
             </tr>
         {% else %}
@@ -33,6 +34,7 @@
         {% endfor %}
         </tbody>
     </table>
+
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <a class="btn btn-success" href="{{ path('lab_new') }}">Ajouter un nouveau</a>
 
@@ -68,4 +70,35 @@
             </table>
         {% endif %}
     {% endif %}
+    <h1>Labos Archivés</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for lab in labsArchived %}
+            <tr>
+                <td>{{ lab.id }}</td>
+                <td>{{ lab.name }}</td>
+                <td>{{ lab.description }}</td>
+                <td class="btn-group">
+                    <a class="btn btn-sm btn-primary" href="{{ path('lab_show', {'id': lab.id}) }}">show</a>
+                    <a class="btn btn-sm btn-success" href="{{ path('lab_edit', {'id': lab.id}) }}">edit</a>
+                    <a class="btn btn-sm btn-default" href="{{ path('lab_duplicate', {'id': lab.id}) }}">duplicate</a>
+                    <a class="btn btn-sm btn-info" href="{{ path('lab_archive', {'id': lab.id}) }}">archive</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
